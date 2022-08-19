@@ -39,5 +39,5 @@ jobs:
       uses: actions/upload-artifact@v2.2.2
       with:
         name: Actions
-        path: CMA.Actions/CMA.Actions/Actions/**
+        path: CMA.Actions/Actions/**
         if-no-files-found: error
