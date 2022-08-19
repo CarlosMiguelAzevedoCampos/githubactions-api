@@ -7,5 +7,11 @@ namespace CMA.Actions.Tests
         {
             Assert.True(new FabricService().IsValid());
         }
+
+        [Fact]
+        public void FabricService_IsInvalid()
+        {
+            Assert.True(new FabricService().IsInvalid());
+        }
     }
 }
