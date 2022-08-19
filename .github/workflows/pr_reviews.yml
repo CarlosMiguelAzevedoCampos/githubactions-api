@@ -1,4 +1,4 @@
-name: .NET Core Unit Tests
+name: Pull Requests Review
 
 on: [pull_request]
 
