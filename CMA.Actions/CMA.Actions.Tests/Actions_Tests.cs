@@ -11,7 +11,7 @@ namespace CMA.Actions.Tests
         [Fact]
         public void FabricService_IsInvalid()
         {
-            Assert.True(new FabricService().IsInvalid());
+            Assert.False(new FabricService().IsInvalid());
         }
     }
 }
