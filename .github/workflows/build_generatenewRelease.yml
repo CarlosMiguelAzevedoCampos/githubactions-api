@@ -34,3 +34,9 @@ jobs:
         
     - name: Publish
       run: dotnet publish -c Release -o Actions
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: Actions
+        if-no-files-found: error
