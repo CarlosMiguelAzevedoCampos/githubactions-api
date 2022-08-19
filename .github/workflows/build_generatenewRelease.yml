@@ -40,21 +40,22 @@ jobs:
       with:
           files: Actions
           dest: release.zip
-    - name: Generate build number
-      uses: einaregilsson/build-number@v3
-      with:
-        token: ${{secrets.github_token}}  
-        
+          
+          
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ steps.get_tag.outputs.tag }}
-          draft: false
-          prerelease: false
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Changes in this Release
+          - First Change
+          - Second Change
+        draft: false
+        prerelease: false
           
     - name: Upload Release Asset
       id: upload-release-asset 
