@@ -33,7 +33,7 @@ jobs:
         fail-on-error: true
         
     - name: Zip the Build
-      run: zip -r ${{ secrets.ReleaseZipName }} ./CMA.Actions/bin/Release/net6.0/actions
+      run: zip -r ${{ secrets.ReleaseZipName }} ./CMA.Actions/CMA.Actions/bin/Release/net6.0/
       
     - name: Create Release
       id: create_release
