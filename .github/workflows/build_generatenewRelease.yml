@@ -52,7 +52,7 @@ jobs:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           tag_name: ${{ github.ref }}
-          release_name: echo "v.$BUILD_NUMBER"
+          release_name: "v.${{BUILD_NUMBER}}"
           draft: false
           prerelease: false
           
