@@ -44,18 +44,14 @@ jobs:
           
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
-      env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      uses: CupOfTea696/gh-action-auto-release@v1.0.0
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        body: |
-          Changes in this Release
-          - First Change
-          - Second Change
-        draft: false
-        prerelease: false
+          title: "Release: $version"
+          tag: "v$semver"
+          draft: false
+          regex: "/^Release: #{semver}$/i"
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
     - name: Upload Release Asset
       id: upload-release-asset 
