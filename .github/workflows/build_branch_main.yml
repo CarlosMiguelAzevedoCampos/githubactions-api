@@ -19,7 +19,9 @@ jobs:
 
     - name: Build
       run: dotnet build --configuration Release
-
+  test:
+    runs-on: ubuntu-latest
+    steps:
     - name: Test
       run: dotnet test --logger "trx;LogFileName=test-results.trx" || true
 
