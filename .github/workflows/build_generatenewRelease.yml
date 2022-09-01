@@ -1,0 +1,68 @@
+name: "Build/Release"
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: "Build and Release"
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout  
+      uses: actions/checkout@v1
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+
+    - name: Build
+      run: dotnet build --configuration Release
+
+    - name: Test
+      run: dotnet test --logger "trx;LogFileName=test-results.trx" || true
+
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: Tests
+        path: "**/test-results.trx"                            
+        reporter: dotnet-trx
+        fail-on-error: true
+        
+    - name: Publish
+      run: dotnet publish -c Release -o Actions
+    
+    - name: Zip Publish
+      uses: vimtor/action-zip@v1
+      with:
+          files: Actions
+          dest: release.zip
+          
+          
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Changes in this Release
+           - First Change
+          - Second Change
+        draft: false
+        prerelease: false
+          
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./release.zip
+          asset_name: release.zip
+          asset_content_type: application/zip

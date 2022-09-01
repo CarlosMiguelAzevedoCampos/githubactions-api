@@ -1,6 +1,9 @@
-name: .NET Core Unit Tests
+name: "Build Master"
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - "main"
 
 jobs:
   build:
